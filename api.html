@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        background-color: #40566F;
+        color: white;
+    }
+    .container{
+        display: grid;
+        grid-template-columns:1fr 1fr 1fr 1fr;
+        gap: 25px;
+        width: 80%;
+        margin: auto;
+    
+    }
+    .card{
+        width: 100%;
+        border: 1px solid white;
+        position: relative;
+        border-radius: 5px;
+        box-shadow: 2px 2px 8px white;
+        
+    }
+    .card img{
+        width: 100%;
+        min-height: 422px;
+    }
+    .title{
+        text-align: left;
+        padding: 10px;
+        font-weight: bolder;
+        font-size: 18px;
+    }
+    .rate{
+        padding: 15px;
+        text-align: end; 
+        position: absolute;
+        bottom: -20px;
+        right: 0;
+        font-size: 20px;
+        color: white;
+         
+
+
+    }
+    .rate span{
+        border: 1px solid white;
+        background-color: black;
+        padding: 5px;
+        border-radius: 50%;
+
+    }
+    .image{
+        position: relative;
+    }
+    h1{
+        text-align: center;
+    }
+    .hoverr{
+        position: absolute;
+        top: 0%;
+        left: 0%;
+        opacity: 0;
+        height: 99%;
+        background-color: rgba(0, 0, 0, 0.3);
+        color: white;
+        text-align: center;
+        
+    }
+    .hoverr p{
+        display: inline-block;
+        margin-top: 60px;
+        
+        
+    }
+    .hoverr:hover {
+        opacity: 1;
+        transition: 0.4s ease-in-out;
+       animation: sliderr 0.5s ease-in-out;
+        
+    }
+    .hoverr:active {
+        opacity: 1;
+        transition: 0.4s ease-in-out;
+       animation: sliderr 0.5s ease-in-out;
+        
+    }
+    .image img:hover{
+        opacity: 0.5;
+    }
+    .image img:active{
+        opacity: 0.5;
+    }
+
+
+    @keyframes sliderr{
+        0%{
+            transform: translateY(10%);
+        }
+       
+        100%{
+            transform: translateY(0%);
+        }
+    }
+
+    @media only screen and (max-width: 800px){
+
+     .container{
+        grid-template-columns: 1fr 1fr;
+     }
+
+    }
+</style>
+<body>
+
+<h1>POPULAR-20</h1>
+  <div class="container">
+    
+    
+</div>
+  </div>
+
+
+
+    <script>
+
+const options = {
+  method: 'GET',
+  headers: {
+    accept: 'application/json',
+    Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NmE1ZjA4OTVmY2JhNjJiZTkwZmFjMWVmNDk2NTk1NiIsInN1YiI6IjYzNjQyZjJhMDkxZTYyMDA3YTFhZmNkNSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ._MT0hOW6VKO-w8b9YPt1Li9zxShKaDwD-OoAoCttFHY'
+  }
+};
+
+const container = document.querySelector(".container");
+const url = "https://image.tmdb.org/t/p/w500"
+
+fetch('https://api.themoviedb.org/3/tv/popular?language=en-US&page=1', options)
+  .then(response => response.json())
+  .then(response => getFilm(response.results))
+  .catch(err => console.error(err));
+
+
+
+  const getFilm = (response) =>{
+     console.log(response)
+
+    for(let i = 0 ; i < response.length; i++){
+        let card = document.createElement("div");
+        card.classList.add("card");
+        let img =document.createElement("div")
+        img.classList.add("image");
+        let image = document.createElement("img");
+        let rate = document.createElement("div");
+        rate.classList.add("rate");
+        let title = document.createElement("div");
+        title.classList.add("title");
+
+        let hover = document.createElement("div");
+        hover.classList.add("hoverr")
+        
+        title.innerHTML= response[i].name;
+        rate.innerHTML = `<span> ${response[i].vote_average} </span>`;
+
+       hover.innerHTML = '<p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>'
+
+       img.appendChild(image);
+       img.appendChild(hover);
+        card.appendChild(img) ;
+        card.appendChild(title);
+        img.appendChild(rate);
+       
+        container.appendChild(card);
+
+        image.src = url+response[i].poster_path; 
+
+       
+        };
+
+       
+
+       
+         
+  }
+    </script>
+</body>
+</html>
