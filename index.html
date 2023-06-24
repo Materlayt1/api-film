@@ -118,7 +118,8 @@
     }
 </style>
 <body>
-
+<input type="text" placeholder="search..." style="display: inline-block;">
+<button type="submit" style="display: inline-block;">Bul</button>
 <h1>POPULAR-20</h1>
   <div class="container">
     
@@ -183,11 +184,35 @@ fetch('https://api.themoviedb.org/3/tv/popular?language=en-US&page=1', options)
        
         };
 
-       
 
-       
+
+        
+  const btn = document.querySelector("button")
+  const input = document.querySelector("input")
+  const title =document.querySelectorAll(".card")
+input.addEventListener("input",searchh)
+  btn.addEventListener("click",searchh)
+
+  function searchh() {
+    let text = input.value.toLowerCase();
+ 
+    title.forEach(element => {
+        const textTitle = element.querySelector(".title");
+
+        if(textTitle.textContent.toLowerCase().includes(text)){
+            element.style.display = "block"
+        }
+        else{
+            element.style.display = "none"
+        }
+
+        
+    })
+}
+
          
   }
+
     </script>
 </body>
 </html>
